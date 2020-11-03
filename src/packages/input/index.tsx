@@ -1,6 +1,8 @@
-import { defineComponent, toRefs, ref, watch } from 'vue';
-import Icon from '@/component/icon';
-import './index.scss';
+import {
+  defineComponent, toRefs, ref, watch,
+} from 'vue';
+import Icon from '@/packages/icon';
+import './style/index.scss';
 
 export interface InputProps extends CustomEleProps {
   value?: string | number;
@@ -13,11 +15,11 @@ export interface InputProps extends CustomEleProps {
   size?: 'large' | 'middle' | 'small';
   /**
    * 头部 icon
-  */
+   */
   prefixIcon?: string;
   /**
    * 尾部 icon
-  */
+   */
   suffixIcon?: string;
   isError?: boolean;
   plain?: boolean;
@@ -121,64 +123,63 @@ const Input = defineComponent({
           `--${type.value}`,
           `--${size.value}`,
           {
-            [`--disabled`]: disabled.value,
-            [`--prefix-icon`]: prefixIcon?.value,
-            [`--suffix-icon`]: suffixIcon?.value,
-            [`--clearable`]: clearable.value,
-            [`--password`]: passwordSwitch.value,
-            [`--is-error`]: isError.value,
-            [`--plain`]: plain.value,
+            '--disabled': disabled.value,
+            '--prefix-icon': prefixIcon?.value,
+            '--suffix-icon': suffixIcon?.value,
+            '--clearable': clearable.value,
+            '--password': passwordSwitch.value,
+            '--is-error': isError.value,
+            '--plain': plain.value,
           },
         ]}
       >
-        {
-          prefixIcon?.value && (
-            <Icon.component
-              class='d-input__prefix-icon'
-              icon={prefixIcon.value}
-            />
-          )
-        }
-        <input
-          class='d-input__input'
-          disabled={disabled.value}
-          maxlength={maxlength?.value}
-          placeholder={String(placeholder.value)}
-          ref={n => inputRef.value = n}
-          type={currentType.value}
-          value={value?.value}
-          onChange={onChange}
-          onInput={onInput}
-          {...ctx.attrs}
-        />
-        {
-          clearable.value && !isEmpty(currentValue.value) && (
-            <Icon.component
-              class='d-input__clearable-icon'
-              icon='x-circle'
-              onClick={onClear}
-            />
-          )
-        }
-        {
-          suffixIcon?.value && !passwordSwitch.value && (
-            <Icon.component
-              class='d-input__suffix-icon'
-              icon={suffixIcon.value}
-            />
-          )
-        }
-        {
-          passwordSwitch.value && (
-            <Icon.component
-              class='d-input__suffix-icon'
-              icon='eye'
-              onClick={() => {
-                currentType.value = currentType.value === 'password' ? 'text' : 'password';
-              }}
-            />
-          )
-        }
+        {prefixIcon?.value && (
+          <Icon.component class="d-input__prefix-icon" icon={prefixIcon.value} />
+        )}
+        {type?.value !== 'textarea' && (
+          <input
+            class="d-input__input"
+            disabled={disabled.value}
+            maxlength={maxlength?.value}
+            placeholder={String(placeholder.value)}
+            ref={(n) => (inputRef.value = n)}
+            type={currentType.value}
+            value={value?.value}
+            onChange={onChange}
+            onInput={onInput}
+            {...ctx.attrs}
+          />
+        )}
+
+        {clearable.value && !isEmpty(currentValue.value) && (
+          <Icon.component
+            class="d-input__clearable-icon"
+            icon="x-circle"
+            // onClick={onClear}
+          />
+          // <button onClick={onClear}></button>
+        )}
+        {suffixIcon?.value && !passwordSwitch.value && (
+          <Icon.component class="d-input__suffix-icon" icon={suffixIcon.value} />
+        )}
+        {passwordSwitch.value && (
+          // <Icon.component
+          //   class='d-input__suffix-icon'
+          //   icon='eye'
+          //   // onClick={() => {
+          //   //   currentType.value = currentType.value === 'password' ? 'text' : 'password';
+          //   // }}
+          // />
+          <button
+            onClick={() => {
+              currentType.value = currentType.value === 'password' ? 'text' : 'password';
+            }}
+          ></button>
+        )}
+
+        {type?.value === 'textarea' && (
+          <textarea ref="textarea" class="d-textarea__inner"></textarea>
+        )}
       </div>
     );
   },

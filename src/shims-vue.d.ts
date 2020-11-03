@@ -4,7 +4,20 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>;
   export default component;
 }
-
+declare module 'slash2';
+declare module '*.css';
+declare module '*.less';
+declare module '*.scss';
+declare module '*.sass';
+declare module '*.svg';
+declare module '*.png';
+declare module '*.jpg';
+declare module '*.jpeg';
+declare module '*.gif';
+declare module '*.md';
+declare module '*.json';
+declare module '*.woff';
+declare module '*.ttf';
 declare interface CustomEleProps {
   style: {
     [key: string]: string;

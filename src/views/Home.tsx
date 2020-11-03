@@ -25,8 +25,6 @@ export default defineComponent({
   },
   setup(props, context) {
     const { user } = toRefs(props);
-    console.log(user, context);
-
     const counter = ref(0);
     console.log('counter is ', isReactive(counter));
     watch(counter, () => {
@@ -68,7 +66,6 @@ export default defineComponent({
     //   count,
     //   object,
     // };
-    const logoImg = require('../assets/logo.png');
 
     return () => (
       <div class="home">
