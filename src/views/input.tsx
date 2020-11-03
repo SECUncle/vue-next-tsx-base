@@ -6,10 +6,10 @@ export default defineComponent({
   setup() {
     return () => (
       <div>
-        无type <DInput.component /> <br/>
-        type:text <DInput.component type="text" clearable/> <br/>
-        type:password<DInput.component type="password"/> <br/>
-        type:textarea<DInput.component type="textarea"/>  <br/>
+        <p>无type + maxlength <DInput.component maxlength={10} clearable /></p>
+        <p>type:text + clearable <DInput.component type="text" clearable /> </p>
+        <p>type:password+ disabled<DInput.component type="password" disabled={false}/> </p>
+        <p>type:textarea<DInput.component type="textarea"/>  </p>
       </div>
     );
   },

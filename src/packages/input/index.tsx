@@ -1,5 +1,5 @@
 import {
-  defineComponent, toRefs, ref, watch,
+  defineComponent, toRefs, ref, watch, computed, nextTick, onMounted,
 } from 'vue';
 import Icon from '@/packages/icon';
 import './style/index.scss';
@@ -91,29 +91,68 @@ const Input = defineComponent({
       isError,
       plain,
     } = toRefs(props);
-    const currentValue = ref('');
+
+    const textarea = ref();
     const inputRef = ref();
     const currentType = ref(type.value);
+    const inputOrTextarea = computed(() => inputRef.value || textarea.value);
+    const nativeInputValue = computed(() => String(props.value));
+
+    const setNativeInputValue = () => {
+      const input = inputOrTextarea.value;
+      if (!input || input.value === nativeInputValue.value) return;
+    };
+
     const onInput = (e: Event) => {
       const target = e.target as HTMLInputElement;
-      currentValue.value = target.value;
+      // currentValue.value = target.value;
+      // console.log(currentValue, 'onInput');
       ctx.emit('input', target.value);
       ctx.emit('update:value', target.value);
+      console.log(target.value, 'target.value onInput');
+      nextTick(setNativeInputValue);
     };
     const onChange = (e: Event) => {
       const target = e.target as HTMLInputElement;
       ctx.emit('change', target.value);
+      console.log(target.value, 'onChange');
     };
     const onClear = () => {
-      inputRef.value.focus();
-      currentValue.value = '';
+      // input.value.focus();
+      // currentValue.value = '';
+      console.log('onClear', inputRef.value.value);
+
+      inputRef.value.value = '';
       ctx.emit('clear');
+      ctx.emit('change', '');
       ctx.emit('update:value', '');
     };
     const isEmpty = (val: string | null | undefined | number) => val === '' || val === undefined || val === null;
 
-    watch(type, (curr) => {
-      currentType.value = curr;
+    watch(
+      () => props.value,
+      (val) => {
+        console.log(val);
+      },
+    );
+
+    watch(nativeInputValue, () => {
+      setNativeInputValue();
+    });
+
+    watch(
+      () => props.type,
+      () => {
+        // console.log(currentType, 'watch');
+        // currentType.value = curr;
+        nextTick(() => {
+          setNativeInputValue();
+        });
+      },
+    );
+
+    onMounted(() => {
+      setNativeInputValue();
     });
 
     return () => (
@@ -133,7 +172,7 @@ const Input = defineComponent({
           },
         ]}
       >
-        {prefixIcon?.value && (
+        {prefixIcon?.value && !isEmpty(inputRef.value.value) && (
           <Icon.component class="d-input__prefix-icon" icon={prefixIcon.value} />
         )}
         {type?.value !== 'textarea' && (
@@ -151,34 +190,42 @@ const Input = defineComponent({
           />
         )}
 
-        {clearable.value && !isEmpty(currentValue.value) && (
-          <Icon.component
-            class="d-input__clearable-icon"
-            icon="x-circle"
-            // onClick={onClear}
-          />
-          // <button onClick={onClear}></button>
+        {clearable.value && (
+          <span onClick={onClear}>
+            <Icon.component class="d-input__clearable-icon" icon="x-circle" />
+          </span>
         )}
         {suffixIcon?.value && !passwordSwitch.value && (
           <Icon.component class="d-input__suffix-icon" icon={suffixIcon.value} />
         )}
         {passwordSwitch.value && (
-          // <Icon.component
-          //   class='d-input__suffix-icon'
-          //   icon='eye'
-          //   // onClick={() => {
-          //   //   currentType.value = currentType.value === 'password' ? 'text' : 'password';
-          //   // }}
-          // />
-          <button
+          <span
             onClick={() => {
               currentType.value = currentType.value === 'password' ? 'text' : 'password';
             }}
-          ></button>
+          >
+            <Icon.component class="d-input__suffix-icon" icon="eye" />
+          </span>
         )}
 
         {type?.value === 'textarea' && (
-          <textarea ref="textarea" class="d-textarea__inner"></textarea>
+          <textarea
+            ref={(n) => (textarea.value = n)}
+            class={[
+              'd-textarea',
+              `--${type.value}`,
+              `--${size.value}`,
+              {
+                '--disabled': disabled.value,
+                '--prefix-icon': prefixIcon?.value,
+                '--suffix-icon': suffixIcon?.value,
+                '--clearable': clearable.value,
+                '--password': passwordSwitch.value,
+                '--is-error': isError.value,
+                '--plain': plain.value,
+              },
+            ]}
+          ></textarea>
         )}
       </div>
     );
