@@ -68,6 +68,7 @@ export default defineComponent({
     //   count,
     //   object,
     // };
+    const logoImg = require('../assets/logo.png');
 
     return () => (
       <div class="home">

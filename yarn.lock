@@ -1233,21 +1233,7 @@
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-transform-on/-/babel-helper-vue-transform-on-1.0.0-rc.2.tgz#7246341f666e7c6e65b13da420e2ce85714fbbca"
   integrity sha512-1+7CwjQ0Kasml6rHoNQUmbISwqLNNfFVBUcZl6QBremUl296ZmLrVQPqJP5pyAAWjZke5bpI1hlj+LVVuT7Jcg==
 
-"@vue/babel-plugin-jsx@^1.0.0-0":
-  version "1.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@vue/babel-plugin-jsx/-/babel-plugin-jsx-1.0.0-rc.3.tgz#ab477ee95c764fbe68842a2eddd474f122e70ac6"
-  integrity sha512-/Ibq0hoKsidnHWPhgRpjcjYhYcHpqEm2fiKVAPO88OXZNHGwaGgS4yXkC6TDEvlZep4mBDo+2S5T81wpbVh90Q==
-  dependencies:
-    "@babel/helper-module-imports" "^7.0.0"
-    "@babel/plugin-syntax-jsx" "^7.0.0"
-    "@babel/traverse" "^7.0.0"
-    "@babel/types" "^7.0.0"
-    "@vue/babel-helper-vue-transform-on" "^1.0.0-rc.2"
-    camelcase "^6.0.0"
-    html-tags "^3.1.0"
-    svg-tags "^1.0.0"
-
-"@vue/babel-plugin-jsx@^1.0.0-rc.3":
+"@vue/babel-plugin-jsx@^1.0.0-0", "@vue/babel-plugin-jsx@^1.0.0-rc.3":
   version "1.0.0-rc.3"
   resolved "http://artifactory.intra.xiaojukeji.com:80/artifactory/api/npm/npm/@vue/babel-plugin-jsx/download/@vue/babel-plugin-jsx-1.0.0-rc.3.tgz#ab477ee95c764fbe68842a2eddd474f122e70ac6"
   integrity sha1-q0d+6Vx2T75ohCou3dR08SLnCsY=
@@ -2827,6 +2813,11 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.2.5:
+  version "2.2.6"
+  resolved "http://artifactory.intra.xiaojukeji.com:80/artifactory/api/npm/npm/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+  integrity sha1-Q5Nb/90pHzJtrQogUwmzjQD2UM4=
+
 clean-css@4.2.x:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.3.tgz#507b5de7d97b48ee53d84adb0160ff6216380f78"
@@ -3196,7 +3187,7 @@ core-js@^2.4.0, core-js@^2.6.5:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
 
-core-js@^3.6.5:
+core-js@^3.1.3, core-js@^3.6.5:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
   integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
@@ -4575,6 +4566,14 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
+
+feather-icons@^4.28.0:
+  version "4.28.0"
+  resolved "http://artifactory.intra.xiaojukeji.com:80/artifactory/api/npm/npm/feather-icons/download/feather-icons-4.28.0.tgz#e1892a401fe12c4559291770ff6e68b0168e760f"
+  integrity sha1-4YkqQB/hLEVZKRdw/25osBaOdg8=
+  dependencies:
+    classnames "^2.2.5"
+    core-js "^3.1.3"
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
