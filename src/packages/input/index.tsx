@@ -75,7 +75,7 @@ const Input = defineComponent({
       default: false,
     },
   },
-  emits: ['input', 'update:value', 'change', 'clear'],
+  emits: ['input', 'update:value', 'change', 'focus', 'blur', 'clear'],
   setup(props, ctx) {
     const {
       value,
@@ -97,6 +97,10 @@ const Input = defineComponent({
     const currentType = ref(type.value);
     const inputOrTextarea = computed(() => inputRef.value || textarea.value);
     const nativeInputValue = computed(() => String(props.value));
+    const focused = ref(false);
+    const hovering = ref(false);
+
+    const showClear = computed(() => props.clearable && (focused.value || hovering.value));
 
     const setNativeInputValue = () => {
       const input = inputOrTextarea.value;
@@ -105,46 +109,65 @@ const Input = defineComponent({
 
     const onInput = (e: Event) => {
       const target = e.target as HTMLInputElement;
-      // currentValue.value = target.value;
-      // console.log(currentValue, 'onInput');
       ctx.emit('input', target.value);
       ctx.emit('update:value', target.value);
-      console.log(target.value, 'target.value onInput');
       nextTick(setNativeInputValue);
     };
     const onChange = (e: Event) => {
       const target = e.target as HTMLInputElement;
       ctx.emit('change', target.value);
-      console.log(target.value, 'onChange');
+    };
+
+    const onFocus = (e: Event) => {
+      focused.value = true;
+      const target = e.target as HTMLInputElement;
+      // ctx.emit("input", target.value);
+
+      ctx.emit('focus', e);
+      // ctx.emit("update:value", target.value);
+    };
+    const onBlur = (e: Event) => {
+      focused.value = false;
+      const target = e.target as HTMLInputElement;
+      console.log(target.value, 'onBlur');
+      // ctx.emit("input", target.value);
+
+      ctx.emit('blur', e);
+      // ctx.emit("update:value", target.value);
+    };
+
+    const focus = () => {
+      nextTick(() => {
+        inputOrTextarea.value.focus();
+      });
+    };
+
+    const blur = () => {
+      inputOrTextarea.value.blur();
     };
     const onClear = () => {
-      // input.value.focus();
-      // currentValue.value = '';
-      console.log('onClear', inputRef.value.value);
-
       inputRef.value.value = '';
       ctx.emit('clear');
       ctx.emit('change', '');
       ctx.emit('update:value', '');
     };
-    const isEmpty = (val: string | null | undefined | number) => val === '' || val === undefined || val === null;
 
     watch(
       () => props.value,
       (val) => {
-        console.log(val);
+        console.log(val, 'props value watch');
       },
     );
 
-    watch(nativeInputValue, () => {
+    watch(nativeInputValue, (val) => {
+      console.log(val, 'nativeInputValue watch');
       setNativeInputValue();
     });
 
     watch(
       () => props.type,
-      () => {
-        // console.log(currentType, 'watch');
-        // currentType.value = curr;
+      (val) => {
+        console.log(val, ' props.type watch');
         nextTick(() => {
           setNativeInputValue();
         });
@@ -172,7 +195,7 @@ const Input = defineComponent({
           },
         ]}
       >
-        {prefixIcon?.value && !isEmpty(inputRef.value.value) && (
+        {prefixIcon?.value && showClear.value && (
           <Icon.component class="d-input__prefix-icon" icon={prefixIcon.value} />
         )}
         {type?.value !== 'textarea' && (
@@ -181,16 +204,18 @@ const Input = defineComponent({
             disabled={disabled.value}
             maxlength={maxlength?.value}
             placeholder={String(placeholder.value)}
-            ref={(n) => (inputRef.value = n)}
+            ref="input"
             type={currentType.value}
             value={value?.value}
             onChange={onChange}
             onInput={onInput}
+            onFocus={onFocus}
+            onBlur={onBlur}
             {...ctx.attrs}
           />
         )}
 
-        {clearable.value && (
+        {clearable.value && showClear.value && (
           <span onClick={onClear}>
             <Icon.component class="d-input__clearable-icon" icon="x-circle" />
           </span>
@@ -210,7 +235,7 @@ const Input = defineComponent({
 
         {type?.value === 'textarea' && (
           <textarea
-            ref={(n) => (textarea.value = n)}
+            ref="textarea"
             class={[
               'd-textarea',
               `--${type.value}`,
@@ -225,6 +250,10 @@ const Input = defineComponent({
                 '--plain': plain.value,
               },
             ]}
+            onChange={onChange}
+            onInput={onInput}
+            onFocus={onFocus}
+            onBlur={onBlur}
           ></textarea>
         )}
       </div>
