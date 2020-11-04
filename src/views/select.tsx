@@ -5,12 +5,11 @@ export default defineComponent({
   setup() {
     return () => (
       <div>
-        select
+        <div class="select_wrapper">基础</div>
         <d-select>
 
         </d-select>
-        {/* <DSelect className="componment">
-        </DSelect> */}
+
       </div>
     )
   },

@@ -1,6 +1,6 @@
 import { defineComponent, computed, toRefs } from 'vue'
+// import { isValidComponentSize } from '@/packages/utils/validators'
 import { useGlobalConfig } from '@/packages/utils/util'
-import { isValidComponentSize } from '@/packages/utils/validators'
 
 export default defineComponent({
   name: 'd-tag',

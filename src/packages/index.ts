@@ -4,7 +4,7 @@
  * @Autor: wangyaju
  * @Date: 2020-11-04 16:35:44
  * @LastEditors: wangyaju
- * @LastEditTime: 2020-11-04 17:38:43
+ * @LastEditTime: 2020-11-04 19:42:56
  */
 import Icon from './icon'
 import Input from './input'
@@ -19,13 +19,7 @@ const components = [
   Tag,
   Popper,
 ]
-// const install = Vue => {
-//   if (install.installed) return
-//   components.map(component => Vue.component(component.name, component))
-// }
-// if (typeof window !== 'undefined' && window.Vue) {
-//   install(window.Vue)
-// }
+
 const install = (app: any) => {
   components.map(component => app.component(component.name, component))
 }

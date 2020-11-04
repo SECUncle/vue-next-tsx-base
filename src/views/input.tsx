@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import DInput from '@/packages/input'
+// import DInput from '@/packages/input'
 import './input.scss'
 
 export default defineComponent({
