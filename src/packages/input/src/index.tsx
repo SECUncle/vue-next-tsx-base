@@ -234,7 +234,6 @@ const Input = defineComponent({
           <span
             onClick={() => {
               currentType.value = currentType.value === 'password' ? 'text' : 'password'
-              console.log(currentType, 'currentType.value')
             }}
           >
             <d-icon class="d-input__suffix-icon" icon="eye" />

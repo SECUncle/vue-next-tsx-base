@@ -1,5 +1,4 @@
 import { defineComponent } from 'vue'
-// import DSelect from '@/packages/select'
 
 export default defineComponent({
   setup() {
