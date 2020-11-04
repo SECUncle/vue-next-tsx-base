@@ -2,7 +2,7 @@ import {
   defineComponent, toRefs, ref, watch, computed, nextTick, onMounted,
 } from 'vue'
 import DIcon from '@/packages/icon'
-import './style/index.scss'
+import '../style/index.scss'
 
 // TODO size、 clear、 带icon、文本框、rows、可适应文本框 复合型输入框、 尺寸、待输入建议、 自定义模版、远程搜索、
 
@@ -269,7 +269,4 @@ const Input = defineComponent({
   },
 })
 
-Input.install = function (app: any) {
-  app.component(Input.name, Input)
-}
 export default Input
