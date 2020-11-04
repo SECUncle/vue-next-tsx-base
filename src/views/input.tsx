@@ -10,21 +10,21 @@ export default defineComponent({
       <div class="input-wrapper">
         <p>
           <div class="label">无type + maxlength</div>
-          <DInput.component value={input.value} maxlength={10} clearable placeholder="输入text" />
+          <d-input value={input.value} maxlength={10} clearable placeholder="输入text" />
         </p>
         <p>
-          <div class="label">type:text + clearable</div> <DInput.component type="text" clearable />
+          <div class="label">type:text + clearable</div> <d-input type="text" clearable />
         </p>
         <p>
-          <div class="label">type:text + disabled</div> <DInput.component type="text" disabled />
+          <div class="label">type:text + disabled</div> <d-input type="text" disabled />
         </p>
         <p>
           <div>type:password+ disabled+ password切换</div>
-          <DInput.component type="password" disabled={false} passwordSwitch />
+          <d-input type="password" disabled={false} passwordSwitch />
         </p>
         <p>
           <div class="label">type:textarea</div>
-          <DInput.component type="textarea" />
+          <d-input type="textarea" />
         </p>
       </div>
     )

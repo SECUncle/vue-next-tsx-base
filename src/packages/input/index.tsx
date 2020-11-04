@@ -1,7 +1,7 @@
 import {
   defineComponent, toRefs, ref, watch, computed, nextTick, onMounted,
 } from 'vue'
-import Icon from '@/packages/icon'
+import DIcon from '@/packages/icon'
 import './style/index.scss'
 
 // TODO size、 clear、 带icon、文本框、rows、可适应文本框 复合型输入框、 尺寸、待输入建议、 自定义模版、远程搜索、
@@ -80,6 +80,9 @@ const Input = defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  components: {
+    DIcon,
   },
   emits: ['input', 'update:value', 'change', 'focus', 'blur', 'clear'],
   setup(props, ctx) {
@@ -200,7 +203,7 @@ const Input = defineComponent({
         ]}
       >
         {prefixIcon?.value && showClear.value && (
-          <Icon.component class="d-input__prefix-icon" icon={prefixIcon.value} />
+          <d-icon class="d-input__prefix-icon" icon={prefixIcon.value} />
         )}
         {type?.value !== 'textarea' && (
           <input
@@ -221,11 +224,11 @@ const Input = defineComponent({
 
         {clearable.value && showClear.value && (
           <span onClick={onClear}>
-            <Icon.component class="d-input__clearable-icon" icon="x-circle" />
+            <d-icon class="d-input__clearable-icon" icon="x-circle" />
           </span>
         )}
         {suffixIcon?.value && !passwordSwitch.value && (
-          <Icon.component class="d-input__suffix-icon" icon={suffixIcon.value} />
+          <d-icon class="d-input__suffix-icon" icon={suffixIcon.value} />
         )}
         {passwordSwitch.value && (
           <span
@@ -234,7 +237,7 @@ const Input = defineComponent({
               console.log(currentType, 'currentType.value')
             }}
           >
-            <Icon.component class="d-input__suffix-icon" icon="eye" />
+            <d-icon class="d-input__suffix-icon" icon="eye" />
           </span>
         )}
 
@@ -266,7 +269,7 @@ const Input = defineComponent({
   },
 })
 
-export default {
-  name: Input.name,
-  component: Input,
+Input.install = function (app: any) {
+  app.component(Input.name, Input)
 }
+export default Input

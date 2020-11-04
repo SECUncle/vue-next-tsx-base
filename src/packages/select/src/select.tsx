@@ -1,7 +1,7 @@
-import { defineComponent } from 'vue'
+import { defineComponent, toRefs, Ref } from 'vue'
 
 export default defineComponent({
-  name: 'DSelect',
+  name: 'd-select',
   componentName: 'DSelect',
   props: {
     name: String,
@@ -21,9 +21,21 @@ export default defineComponent({
     },
   },
   emits: ['clear', 'focus', 'blur'],
-  setup(props, ctx) {
-    return {
+  setup(props) {
+    const { multiple } = toRefs(props)
+    return () => (
+      <div
+        class={[
+          'd-select',
+          // {
+          //   selectSize ? 'd-select--' + selectSize : ''
+          // }
+        ]}
+      >
+        {multiple && <div class={['d-select__tags']}></div>}
 
-    }
+        <d-tag disableTransitions></d-tag>
+      </div>
+    )
   },
 })

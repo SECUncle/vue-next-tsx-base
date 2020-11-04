@@ -35,7 +35,12 @@ const Icon = defineComponent({
   },
 })
 
-export default {
-  name: Icon.name,
-  component: Icon,
+// export default {
+//   name: Icon.name,
+//   component: Icon,
+// }
+
+Icon.install = function (app: any) {
+  app.component(Icon.name, Icon)
 }
+export default Icon

@@ -83,6 +83,8 @@ export default defineComponent({
         <br></br>
         object:{object.foo}
         <br></br>
+
+        <d-input type="password"></d-input>
       </div>
     )
   },
