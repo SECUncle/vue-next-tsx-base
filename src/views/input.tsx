@@ -7,11 +7,25 @@ export default defineComponent({
     const input = ref(10);
 
     return () => (
-      <div>
-        <p>无type + maxlength <DInput.component value={input.value} maxlength={10} clearable placeholder="输入text" /></p>
-        <p>type:text + clearable <DInput.component type="text" clearable /> </p>
-        <p>type:password+ disabled<DInput.component type="password" disabled={false}/> </p>
-        <p>type:textarea<DInput.component type="textarea"/>  </p>
+      <div class="input-wrapper">
+        <p>
+          <div class="label">无type + maxlength</div>
+          <DInput.component value={input.value} maxlength={10} clearable placeholder="输入text" />
+        </p>
+        <p>
+          <div class="label">type:text + clearable</div> <DInput.component type="text" clearable />
+        </p>
+        <p>
+          <div class="label">type:text + disabled</div> <DInput.component type="text" disabled />
+        </p>
+        <p>
+          <div>type:password+ disabled+ password切换</div>
+          <DInput.component type="password" disabled={false} passwordSwitch />
+        </p>
+        <p>
+          <div class="label">type:textarea</div>
+          <DInput.component type="textarea" />
+        </p>
       </div>
     );
   },

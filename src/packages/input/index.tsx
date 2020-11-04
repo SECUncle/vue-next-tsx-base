@@ -4,6 +4,12 @@ import {
 import Icon from '@/packages/icon';
 import './style/index.scss';
 
+// TODO size、 clear、 带icon、文本框、rows、可适应文本框 复合型输入框、 尺寸、待输入建议、 自定义模版、远程搜索、
+
+// TODO event、 校验
+
+// issue 清空处理，表单赋值
+
 export interface InputProps extends CustomEleProps {
   value?: string | number;
   placeholder: string | number;
@@ -95,6 +101,7 @@ const Input = defineComponent({
     const textarea = ref();
     const inputRef = ref();
     const currentType = ref(type.value);
+    console.log(currentType, type);
     const inputOrTextarea = computed(() => inputRef.value || textarea.value);
     const nativeInputValue = computed(() => String(props.value));
     const focused = ref(false);
@@ -224,6 +231,7 @@ const Input = defineComponent({
           <span
             onClick={() => {
               currentType.value = currentType.value === 'password' ? 'text' : 'password';
+              console.log(currentType, 'currentType.value');
             }}
           >
             <Icon.component class="d-input__suffix-icon" icon="eye" />
