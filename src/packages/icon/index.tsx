@@ -1,6 +1,6 @@
-import { defineComponent, h } from 'vue';
-import sprite from 'feather-icons/dist/feather-sprite.svg';
-import './index.scss';
+import { defineComponent, h } from 'vue'
+import sprite from 'feather-icons/dist/feather-sprite.svg'
+import './index.scss'
 
 const Icon = defineComponent({
   name: 'd-icon',
@@ -31,11 +31,11 @@ const Icon = defineComponent({
           },
         ),
       ],
-    );
+    )
   },
-});
+})
 
 export default {
   name: Icon.name,
   component: Icon,
-};
+}

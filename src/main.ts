@@ -13,6 +13,8 @@ const app = createApp(App);
 
 const components = require.context('@/packages/', true, /index\.tsx$/);
 components.keys().forEach((key) => {
+  console.log(key, key.slice(2));
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { name, component, plugin } = require(`@/packages/${key.slice(2)}`).default;
   if (component) {
     app.component(name, component);

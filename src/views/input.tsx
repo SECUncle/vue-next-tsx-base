@@ -1,10 +1,10 @@
-import { defineComponent, ref } from 'vue';
-import DInput from '@/packages/input';
-import './input.scss';
+import { defineComponent, ref } from 'vue'
+import DInput from '@/packages/input'
+import './input.scss'
 
 export default defineComponent({
   setup() {
-    const input = ref(10);
+    const input = ref(10)
 
     return () => (
       <div class="input-wrapper">
@@ -27,6 +27,6 @@ export default defineComponent({
           <DInput.component type="textarea" />
         </p>
       </div>
-    );
+    )
   },
-});
+})

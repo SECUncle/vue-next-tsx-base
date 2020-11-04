@@ -11,7 +11,7 @@ import {
   onMounted,
   onUnmounted,
   getCurrentInstance,
-} from 'vue';
+} from 'vue'
 
 export default defineComponent({
   components: {
@@ -24,42 +24,42 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const { user } = toRefs(props);
-    const counter = ref(0);
-    console.log('counter is ', isReactive(counter));
+    const { user } = toRefs(props)
+    const counter = ref(0)
+    console.log('counter is ', isReactive(counter))
     watch(counter, () => {
-      console.log('fgfg', counter.value);
-    });
-    const count = ref(0);
-    const plusOne = computed(() => count.value + 1);
-    console.log(plusOne, 'plusOne');
+      console.log('fgfg', counter.value)
+    })
+    const count = ref(0)
+    const plusOne = computed(() => count.value + 1)
+    console.log(plusOne, 'plusOne')
     const object = reactive({
       foo: 'bar',
-    });
-    watchEffect(() => console.log(count.value));
+    })
+    watchEffect(() => console.log(count.value))
 
-    const readefrsNumber = ref(0);
+    const readefrsNumber = ref(0)
     const book = reactive({
       title: 'vue 3 guide',
-    });
+    })
 
     onMounted(() => {
-      console.log('mounted');
-    });
+      console.log('mounted')
+    })
     onUpdated(() => {
-      console.log('updated');
-    });
+      console.log('updated')
+    })
     onUnmounted(() => {
-      getCurrentInstance();
-      console.log('unmounted');
-    });
+      getCurrentInstance()
+      console.log('unmounted')
+    })
     // const useComponentId = () => getCurrentInstance().uid;
     const handleClick = () => {
-      getCurrentInstance();
+      getCurrentInstance()
       // useComponentId();
       // internalInstance;
-    };
-    const internalInstance = getCurrentInstance();
+    }
+    const internalInstance = getCurrentInstance()
     // const id = useComponentId();
     // return {
     //   counter,
@@ -84,6 +84,6 @@ export default defineComponent({
         object:{object.foo}
         <br></br>
       </div>
-    );
+    )
   },
-});
+})

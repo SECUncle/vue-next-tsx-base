@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home';
-import Button from '../views/button';
-import About from '../views/About';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import Home from '../views/Home'
+import Button from '../views/button'
+import About from '../views/About'
 
-import Input from '../views/input';
-import Select from '../views/select';
-import Form from '../views/form';
-import Table from '../views/table';
+import Input from '../views/input'
+import Select from '../views/select'
+import Form from '../views/form'
+import Table from '../views/table'
 
 // import Home from '../components/Home.vue';
 // import Button from '../views/button';
@@ -66,11 +66,11 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: Table,
   },
-];
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
 
-export default router;
+export default router
