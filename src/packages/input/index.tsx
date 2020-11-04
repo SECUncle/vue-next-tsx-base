@@ -104,7 +104,7 @@ const Input = defineComponent({
 
     const setNativeInputValue = () => {
       const input = inputOrTextarea.value;
-      if (!input || input.value === nativeInputValue.value) return;
+      // if (!input || input.value === nativeInputValue.value) return;
     };
 
     const onInput = (e: Event) => {
@@ -120,11 +120,8 @@ const Input = defineComponent({
 
     const onFocus = (e: Event) => {
       focused.value = true;
-      const target = e.target as HTMLInputElement;
-      // ctx.emit("input", target.value);
 
       ctx.emit('focus', e);
-      // ctx.emit("update:value", target.value);
     };
     const onBlur = (e: Event) => {
       focused.value = false;
@@ -136,15 +133,15 @@ const Input = defineComponent({
       // ctx.emit("update:value", target.value);
     };
 
-    const focus = () => {
-      nextTick(() => {
-        inputOrTextarea.value.focus();
-      });
-    };
+    // const focus = () => {
+    //   nextTick(() => {
+    //     inputOrTextarea.value.focus();
+    //   });
+    // };
 
-    const blur = () => {
-      inputOrTextarea.value.blur();
-    };
+    // const blur = () => {
+    //   inputOrTextarea.value.blur();
+    // };
     const onClear = () => {
       inputRef.value.value = '';
       ctx.emit('clear');

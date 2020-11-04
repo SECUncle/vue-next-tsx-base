@@ -6,7 +6,6 @@ export default defineComponent({
   setup() {
     const input = ref(10);
 
-    console.log(input, 'input');
     return () => (
       <div>
         <p>无type + maxlength <DInput.component value={input.value} maxlength={10} clearable placeholder="输入text" /></p>
