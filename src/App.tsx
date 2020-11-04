@@ -5,12 +5,6 @@ export default defineComponent({
     return () => (
       <div>
         <div id="nav">
-          <div class="article_test">
-            vue-next test
-            <router-link to="/">Home</router-link>
-            <router-link to="/about">About</router-link>
-            <router-link to="/button">button</router-link>
-          </div>
           <div class="article_componment">
             componment
             <router-link to="/input">input</router-link>
