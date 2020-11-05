@@ -359,69 +359,106 @@ export default defineComponent({
     }
     // console.log(tabindex, props, 'type showPassword')
     console.log(showClear, 'showClear', ctx.attrs)
-    return () => (
+    return {
+      input,
+      textarea,
+      attrs,
+      inputSize,
+      validateState,
+      validateIcon,
+      textareaStyle,
+      inputDisabled,
+      showClear,
+      showPwdVisible,
+      isWordLimitVisible,
+      upperLimit,
+      textLength,
+      hovering,
+      inputExceed,
+      passwordVisible,
+      inputOrTextarea,
+      handleInput,
+      handleChange,
+      handleFocus,
+      handleBlur,
+      handleCompositionStart,
+      handleCompositionUpdate,
+      handleCompositionEnd,
+      handlePasswordVisible,
+      clear,
+      select,
+      focus,
+      blur,
+      getSuffixVisible,
+      onMouseLeave,
+      onMouseEnter,
+      handleKeydown,
+    }
+  },
+  render() {
+    console.log(this, 'this')
+    return (
       <div
         class={[
-          type.value === 'textarea' ? 'el-textarea' : 'el-input',
-          inputSize ? `el-input--${inputSize.value}` : '',
+          this.type === 'textarea' ? 'el-textarea' : 'el-input',
+          this.inputSize ? `el-input--${this.inputSize.value}` : '',
           {
 
-            'is-disabled': inputDisabled,
-            'is-exceed': inputExceed,
-            'el-input-group': ctx.slots.prepend || ctx.slots.append,
-            'el-input-group--append': ctx.slots.append,
-            'el-input-group--prepend': ctx.slots.prepend,
-            'el-input--prefix': ctx.slots.prefix || prefixIcon,
-            'el-input--suffix': ctx.slots.suffix || suffixIcon || clearable || showPassword,
+            'is-disabled': this.inputDisabled,
+            'is-exceed': this.inputExceed,
+            'el-input-group': this.$slots.prepend || this.$slots.append,
+            'el-input-group--append': this.$slots.append,
+            'el-input-group--prepend': this.$slots.prepend,
+            'el-input--prefix': this.$slots.prefix || this.prefixIcon,
+            'el-input--suffix': this.$slots.suffix || this.suffixIcon || this.clearable || this.showPassword,
           },
-          ctx.attrs.class,
+          // this.$attrs.class,
         ]}
-        onMouseenter={onMouseEnter}
-        onMouseleave={onMouseLeave}
+        onMouseenter={this.onMouseEnter}
+        onMouseleave={this.onMouseLeave}
       >
 
         {
-          type?.value !== 'textarea' && (
+          this.type !== 'textarea' && (
             <div class="template">
               {/* 前置元素 */}
-              {ctx.slots.prepend && (
+              {this.$slots.prepend && (
                 <div class="el-input-group__prepend">
                   <slot name="prepend"></slot>
                 </div>
               )}
               {
-                type?.value !== 'textarea'
+                this.type !== 'textarea'
                 && (< input
                   ref="input"
                   class="el-input__inner"
-                  {...ctx.attrs}
-                  type={showPassword ? (passwordVisible ? 'text' : 'password') : props.type}
-                  disabled={inputDisabled.value}
-                  readonly={props.readonly}
-
-                  autocomplete={props.autocomplete}
-                  // tabindex={tabindex?.value}
-                  aria-label={props.label}
-                  onCompositionstart={handleCompositionStart}
-                  onCompositionupdate={handleCompositionUpdate}
-                  onCompositionend={handleCompositionEnd}
-                  onInput={handleInput}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  onKeydown={handleKeydown}
+                  // {...this.attrs}
+                  type={this.showPassword ? (this.passwordVisible ? 'text' : 'password') : this.type}
+                  disabled={this.inputDisabled}
+                  readonly={this.readonly}
+                  autocomplete={this.autocomplete}
+                  // tabindex={this.tabindex}
+                  aria-label={this.label}
+                  onCompositionstart={this.handleCompositionStart}
+                  onCompositionupdate={this.handleCompositionUpdate}
+                  onCompositionend={this.handleCompositionEnd}
+                  onInput={this.handleInput}
+                  onFocus={this.handleFocus}
+                  onBlur={this.handleBlur}
+                  onChange={this.handleChange}
+                  onKeydown={this.handleKeydown}
                 />)
               }
               {/* <!-- 前置内容 --> */}
               {
-                (ctx.slots.prefix || prefixIcon)
+                (this.$slots.prefix || this.prefixIcon)
                 && (
                   <span class="el-input__prefix">
                     <slot name="prefix"></slot>
                     {
-                      prefixIcon && (
+                      this.prefixIcon && (
                         <i
-                          class={['el-input__icon', prefixIcon]}
+                          class={['el-input__icon', this.prefixIcon]}
                         ></i>
                       )
                     }
@@ -431,14 +468,14 @@ export default defineComponent({
 
               {/* <!-- 后置内容 --> */}
               {
-                getSuffixVisible() && (
+                this.getSuffixVisible() && (
                   <span class="el-input__suffix">
                     <span class="el-input__suffix-inner">
                       {
-                        (!showClear || !showPwdVisible || !isWordLimitVisible)
+                        (!this.showClear || !this.showPwdVisible || !this.isWordLimitVisible)
                         && (<div class="template">
                           <slot name="suffix"></slot>
-                          <i v-if=" " class={['el-input__icon', suffixIcon]}></i>
+                          <i class={['el-input__icon', this.suffixIcon]}></i>
                         </div>)
                       }
                       {
@@ -449,30 +486,29 @@ export default defineComponent({
                             class="el-input__icon el-icon-circle-close el-input__clear"
                             style="cursor: pointer"
                             // @mousedown.prevent
-                            onClick={clear}
+                            onClick={this.clear}
                           >测试清除</i>
                         )
                       }
 
                       {
-                        showPwdVisible && (
-                          <i class="el-input__icon el-icon-view el-input__clear" onClick={handlePasswordVisible}></i>
+                        this.showPwdVisible && (
+                          <i class="el-input__icon el-icon-view el-input__clear" onClick={this.handlePasswordVisible}></i>
                         )
                       }
 
                       {
-                        isWordLimitVisible && (
+                        this.isWordLimitVisible && (
                           <span class="el-input__count">
                             <span class="el-input__count-inner">
-                              {{ textLength }}/{{ upperLimit }}
+                              {this.textLength}/{this.upperLimit}
                             </span>
                           </span>
                         )
                       }
-
                     </span >
                     {
-                      validateState && (<i class={['el-input__icon', 'el-input__validateIcon', validateIcon]}></i>
+                      this.validateState && (<i class={['el-input__icon', 'el-input__validateIcon', this.validateIcon]}></i>
                       )
                     }
                   </span >
@@ -481,7 +517,7 @@ export default defineComponent({
 
               {/* < !--后置元素 --> */}
               {
-                ctx.slots.append && (
+                this.$slots.append && (
                   < div class="el-input-group__append" >
                     <slot name="append"></slot>
                   </div >
@@ -492,38 +528,36 @@ export default defineComponent({
           )
         }
         {
-          type?.value === 'textarea'
+          this.type === 'textarea'
           && (
             <textarea
               ref="textarea"
               class="el-textarea__inner"
-              {...ctx.attrs}
-              style={textareaStyle.value}
-              disabled={inputDisabled.value}
-              readonly={props.readonly}
-              autocomplete={props.autocomplete}
+              {...this.$attrs}
+              style={this.textareaStyle}
+              disabled={this.inputDisabled}
+              readonly={this.readonly}
+              autocomplete={this.autocomplete}
               // tabindex={props.tabindex}
-              aria-label={props.label}
-              onCompositionstart={handleCompositionStart}
-              onCompositionupdate={handleCompositionUpdate}
-              onCompositionend={handleCompositionEnd}
-              onInput={handleInput}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              onChange={handleChange}
+              aria-label={this.label}
+              onCompositionstart={this.handleCompositionStart}
+              onCompositionupdate={this.handleCompositionUpdate}
+              onCompositionend={this.handleCompositionEnd}
+              onInput={this.handleInput}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              onChange={this.handleChange}
             >
             </textarea>
           )
 
         }
         {
-          isWordLimitVisible && type.value === 'textarea'
-          && (<span class="el-input__count">{{ textLength }}/{{ upperLimit }}</span>
+          this.isWordLimitVisible && this.type === 'textarea'
+          && (<span class="el-input__count">{this.textLength}/{ this.upperLimit}</span>
           )
         }
-
       </div >
-
     )
   },
 })

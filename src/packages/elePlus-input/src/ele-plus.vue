@@ -52,14 +52,14 @@
         ></i>
       </span>
       <!-- 后置内容 -->
-      <span v-if="getSuffixVisible()" class="el-input__suffix">
+      <span v-show="getSuffixVisible()" class="el-input__suffix">
         <span class="el-input__suffix-inner">
           <template v-if="!showClear || !showPwdVisible || !isWordLimitVisible">
             <slot name="suffix"></slot>
             <i v-if="suffixIcon" :class="['el-input__icon', suffixIcon]"></i>
           </template>
           <i
-            v-if="showClear"
+            v-show="showClear"
             class="el-input__icon el-icon-circle-close el-input__clear"
             @mousedown.prevent
             @click="clear"
