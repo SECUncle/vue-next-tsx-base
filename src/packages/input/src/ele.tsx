@@ -118,11 +118,11 @@ export default defineComponent({
       type,
       tabindex,
     } = toRefs(props)
-    console.log(type, 'type')
+    // console.log(type, 'type')
     const instance = getCurrentInstance()
     const attrs = useAttrs(true)
     const $ElEMENT = useGlobalConfig()
-    console.log(useGlobalConfig(), 'useGlobalConfig()')
+    // console.log(useGlobalConfig(), 'useGlobalConfig()')
 
     const elForm = inject(elFormKey, {} as ElFormContext)
     const elFormItem = inject(elFormItemKey, {} as ElFormItemContext)
@@ -138,7 +138,7 @@ export default defineComponent({
 
     const inputOrTextarea = computed(() => input.value || textarea.value)
     const inputSize = computed(() => props.size || (elFormItem as any).size || $ElEMENT.size)
-    console.log(inputSize, 'inputSize', props.size, (elFormItem as any).size)
+    // console.log(inputSize, 'inputSize', props.size, (elFormItem as any).size)
     const needStatusIcon = computed(() => elForm.statusIcon)
     const validateState = computed(() => elFormItem.validateState || '')
     const validateIcon = computed(() => (VALIDATE_STATE_MAP as any)[validateState.value])
@@ -304,7 +304,9 @@ export default defineComponent({
       || showClear.value
       || props.showPassword
       || isWordLimitVisible.value
-      || (validateState.value && needStatusIcon.value)
+      || (validateState.value && needStatusIcon.value) || true
+
+    console.log(getSuffixVisible(), 'getSuffixVisible')
 
     watch(() => props.modelValue, val => {
       nextTick(resizeTextarea)
@@ -355,7 +357,8 @@ export default defineComponent({
     const handleKeydown = (e: Event) => {
       ctx.emit('keydown', e)
     }
-    console.log(tabindex, props, 'type showPassword')
+    // console.log(tabindex, props, 'type showPassword')
+    console.log(showClear, 'showClear')
     return () => (
       <div
         class={[
@@ -434,17 +437,18 @@ export default defineComponent({
                         (!showClear || !showPwdVisible || !isWordLimitVisible)
                         && (<div class="template">
                           <slot name="suffix"></slot>
-                          <i v-if="suffixIcon" class={['el-input__icon', suffixIcon]}></i>
+                          <i v-if=" " class={['el-input__icon', suffixIcon]}></i>
                         </div>)
                       }
                       {
-                        showClear && (
+                        // TODO
+                        (
                           <i
 
                             class="el-input__icon el-icon-circle-close el-input__clear"
                             // @mousedown.prevent
                             onClick={clear}
-                          ></i>
+                          >测试清除</i>
                         )
                       }
 
