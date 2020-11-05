@@ -4,13 +4,14 @@
  * @Autor: wangyaju
  * @Date: 2020-11-04 16:35:44
  * @LastEditors: wangyaju
- * @LastEditTime: 2020-11-04 19:42:56
+ * @LastEditTime: 2020-11-05 15:46:41
  */
 import Icon from './icon'
 import Input from './input'
 import Select from './select'
 import Tag from './tag'
 import Popper from './popper'
+import ELInput from './elePlus-input'
 
 const components = [
   Icon,
@@ -18,6 +19,7 @@ const components = [
   Select,
   Tag,
   Popper,
+  ELInput,
 ]
 
 const install = (app: any) => {
@@ -30,6 +32,7 @@ export {
   Select,
   Tag,
   Popper,
+  ELInput,
 }
 export default {
   install,

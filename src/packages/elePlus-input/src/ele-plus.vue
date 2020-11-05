@@ -150,7 +150,7 @@ const PENDANT_MAP = {
 }
 
 export default defineComponent({
-  name: 'd-input',
+  name: 'el-input',
 
   inheritAttrs: false,
 
@@ -247,7 +247,7 @@ export default defineComponent({
     const _textareaCalcStyle = shallowRef({})
 
     const inputOrTextarea = computed(() => input.value || textarea.value)
-    const inputSize = computed(() => props.size || elFormItem.size || $ElEMENT.size)
+    const inputSize = computed(() => props.size || $ElEMENT.size)
     const needStatusIcon = computed(() => elForm.statusIcon)
     const validateState = computed(() => elFormItem.validateState || '')
     const validateIcon = computed(() => VALIDATE_STATE_MAP[validateState.value])
