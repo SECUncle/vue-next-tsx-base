@@ -33,7 +33,7 @@ const PENDANT_MAP = {
   prefix: 'prepend',
 }
 export default defineComponent({
-  name: 'ElInput',
+  name: 'd-input',
 
   inheritAttrs: false,
 
@@ -118,6 +118,7 @@ export default defineComponent({
     const instance = getCurrentInstance()
     const attrs = useAttrs(true)
     const $ElEMENT = useGlobalConfig()
+    console.log(useGlobalConfig(), 'useGlobalConfig()')
 
     const elForm = inject(elFormKey, {} as ElFormContext)
     const elFormItem = inject(elFormItemKey, {} as ElFormItemContext)
@@ -128,13 +129,15 @@ export default defineComponent({
     const hovering = ref(false)
     const isComposing = ref(false)
     const passwordVisible = ref(false)
+    // eslint-disable-next-line no-underscore-dangle
     const _textareaCalcStyle = shallowRef({})
 
     const inputOrTextarea = computed(() => input.value || textarea.value)
-    const inputSize = computed(() => props.size || elFormItem.size || $ElEMENT.size)
+    const inputSize = computed(() => props.size || (elFormItem as any).size || $ElEMENT.size)
+    console.log(inputSize, 'inputSize', props.size, (elFormItem as any).size)
     const needStatusIcon = computed(() => elForm.statusIcon)
     const validateState = computed(() => elFormItem.validateState || '')
-    const validateIcon = computed(() => VALIDATE_STATE_MAP[validateState.value])
+    const validateIcon = computed(() => (VALIDATE_STATE_MAP as any)[validateState.value])
     const textareaStyle = computed(() => ({
       ..._textareaCalcStyle.value,
       resize: props.resize,
@@ -158,9 +161,8 @@ export default defineComponent({
       && !props.readonly
       && !props.showPassword)
     const textLength = computed(() => (typeof props.modelValue === 'number' ? String(props.modelValue).length : (props.modelValue || '').length))
-    const inputExceed = computed(() =>
-      // show exceed style if length of initial value greater then maxlength
-      isWordLimitVisible.value && (textLength.value > upperLimit.value))
+    // show exceed style if length of initial value greater then maxlength
+    const inputExceed = computed(() => isWordLimitVisible.value && (textLength.value > (upperLimit as any).value))
 
     const resizeTextarea = () => {
       const { type, autosize } = props
@@ -170,34 +172,35 @@ export default defineComponent({
       if (autosize) {
         const minRows = isObject(autosize) ? autosize.minRows : void 0
         const maxRows = isObject(autosize) ? autosize.maxRows : void 0
-        _textareaCalcStyle.value = calcTextareaHeight(textarea.value, minRows, maxRows)
+        // _textareaCalcStyle.value = calcTextareaHeight(textarea.value, minRows, maxRows as any)
       } else {
-        _textareaCalcStyle.value = {
-          minHeight: calcTextareaHeight(textarea.value).minHeight,
-        }
+        // _textareaCalcStyle.value = {
+        //   minHeight: calcTextareaHeight(textarea.value).minHeight,
+        // }
       }
     }
 
     const setNativeInputValue = () => {
+      // eslint-disable-next-line no-shadow
       const input = inputOrTextarea.value
-      if (!input || input.value === nativeInputValue.value) return
-      input.value = nativeInputValue.value
+      if (!input || (input as any).value === nativeInputValue.value) return
+      (input as any).value = nativeInputValue.value
     }
 
-    const calcIconOffset = place => {
-      const { el } = instance.vnode
-      const elList: HTMLSpanElement[] = Array.from(el.querySelectorAll(`.el-input__${place}`))
-      const target = elList.find(item => item.parentNode === el)
+    const calcIconOffset = (place: string) => {
+      // const { el } = (instance as any).vnode
+      // const elList: HTMLSpanElement[] = Array.from((el as any).querySelectorAll(`.el-input__${place}`))
+      // const target = elList.find(item => item.parentNode === el)
 
-      if (!target) return
+      // if (!target) return
 
-      const pendant = PENDANT_MAP[place]
+      // const pendant = (PENDANT_MAP as any)[place]
 
-      if (ctx.slots[pendant]) {
-        target.style.transform = `translateX(${place === 'suffix' ? '-' : ''}${el.querySelector(`.el-input-group__${pendant}`).offsetWidth}px)`
-      } else {
-        target.removeAttribute('style')
-      }
+      // if (ctx.slots[pendant]) {
+      //   target.style.transform = `translateX(${place === 'suffix' ? '-' : ''}${(el as any).querySelector(`.el-input-group__${pendant}`).offsetWidth}px)`
+      // } else {
+      //   target.removeAttribute('style')
+      // }
     }
 
     const updateIconOffset = () => {
@@ -205,8 +208,10 @@ export default defineComponent({
       calcIconOffset('suffix')
     }
 
-    const handleInput = event => {
-      const { value } = event.target
+    const handleInput = (event: Event) => {
+      const target = event.target as HTMLInputElement
+
+      const { value } = target
 
       // should not emit input during composition
       // see: https://github.com/ElemeFE/element/issues/10516
@@ -232,12 +237,12 @@ export default defineComponent({
     const focus = () => {
       // see: https://github.com/ElemeFE/element/issues/18573
       nextTick(() => {
-        inputOrTextarea.value.focus()
+        (inputOrTextarea as any).value.focus()
       })
     }
 
     const blur = () => {
-      inputOrTextarea.value.blur()
+      (inputOrTextarea as any).value.blur()
     }
 
     const handleFocus = (event: Event) => {
@@ -249,12 +254,13 @@ export default defineComponent({
       focused.value = false
       ctx.emit('blur', event)
       if (props.validateEvent) {
-        elFormItem.formItemMitt?.emit('el.form.blur', [props.modelValue])
+        // TODO
+        // elFormItem.formItemMitt?.emit('el.form.blur', [props.modelValue])
       }
     }
 
     const select = () => {
-      inputOrTextarea.value.select()
+      (inputOrTextarea as any).value.select()
     }
 
     const handleCompositionStart = () => {
@@ -298,7 +304,8 @@ export default defineComponent({
     watch(() => props.modelValue, val => {
       nextTick(resizeTextarea)
       if (props.validateEvent) {
-        elFormItem.formItemMitt?.emit('el.form.change', [val])
+        // TODO
+        // elFormItem.formItemMitt?.emit('el.form.change', [val])
       }
     })
 
@@ -343,12 +350,13 @@ export default defineComponent({
     const handleKeydown = (e: Event) => {
       ctx.emit('keydown', e)
     }
-    return (
+    return () => (
       <div
         class={[
-          // type === 'textarea' ? 'el-textarea' : 'el-input',
+          // type === 'textarea') ? 'el-textarea' : 'el-input',
           inputSize ? `el-input--${inputSize}` : '',
           {
+
             'is-disabled': inputDisabled,
             'is-exceed': inputExceed,
             'el-input-group': ctx.slots.prepend || ctx.slots.append,
@@ -362,8 +370,9 @@ export default defineComponent({
         onMouseenter={onMouseEnter}
         onMouseleave={onMouseLeave}
       >
-
+        {/* (type!== 'textarea' &&) */}
       </div>
+
     )
   },
 })

@@ -33,7 +33,7 @@ export default defineComponent({
         ]}
       >
         {multiple && <div class={['d-select__tags']}></div>}
-
+        select 测试
         <d-tag disableTransitions></d-tag>
       </div>
     )

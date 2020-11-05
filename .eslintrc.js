@@ -15,6 +15,7 @@ module.exports = {
     // js/ts
     'eol-last': 'error',
     'no-trailing-spaces': 'error',
+    "no-void": 'warn',
     'comma-style': ['error', 'last'],
     'comma-dangle': ['error', 'always-multiline'],
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
@@ -55,6 +56,7 @@ module.exports = {
     }],
     'vue/require-default-prop': 'off',
     'vue/html-closing-bracket-spacing': 'error',
+    'vue/no-ref-as-operand': 'off'
   },
   overrides: [
     {
