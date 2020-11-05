@@ -1,5 +1,13 @@
+/*
+ * @Description:
+ * @Version: 2.0
+ * @Autor: wangyaju
+ * @Date: 2020-10-29 15:40:58
+ * @LastEditors: wangyaju
+ * @LastEditTime: 2020-11-05 15:18:30
+ */
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Input from '../views/input'
+import Input from '../views/input.vue'
 import Select from '../views/select'
 import Form from '../views/form'
 import Table from '../views/table'
