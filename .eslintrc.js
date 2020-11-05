@@ -17,6 +17,7 @@ module.exports = {
     'no-trailing-spaces': 'error',
     "no-void": 'warn',
     'comma-style': ['error', 'last'],
+    'no-nested-ternary': 'off',
     'comma-dangle': ['error', 'always-multiline'],
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
     camelcase: ['error', { properties: 'never' }],

@@ -10,6 +10,7 @@ import {
   onMounted,
   onUpdated,
   toRefs,
+  withCtx,
 } from 'vue'
 import { useAttrs } from '@/packages/hooks'
 import { UPDATE_MODEL_EVENT, VALIDATE_STATE_MAP } from '@/packages/utils/constants'
@@ -114,7 +115,10 @@ export default defineComponent({
   setup(props, ctx) {
     const {
       prefixIcon, clearable, showPassword, suffixIcon,
+      type,
+      tabindex,
     } = toRefs(props)
+    console.log(type, 'type')
     const instance = getCurrentInstance()
     const attrs = useAttrs(true)
     const $ElEMENT = useGlobalConfig()
@@ -165,6 +169,7 @@ export default defineComponent({
     const inputExceed = computed(() => isWordLimitVisible.value && (textLength.value > (upperLimit as any).value))
 
     const resizeTextarea = () => {
+      // eslint-disable-next-line no-shadow
       const { type, autosize } = props
 
       if (isServer || type !== 'textarea') return
@@ -350,11 +355,12 @@ export default defineComponent({
     const handleKeydown = (e: Event) => {
       ctx.emit('keydown', e)
     }
+    console.log(tabindex, props, 'type showPassword')
     return () => (
       <div
         class={[
-          // type === 'textarea') ? 'el-textarea' : 'el-input',
-          inputSize ? `el-input--${inputSize}` : '',
+          type.value === 'textarea' ? 'el-textarea' : 'el-input',
+          inputSize ? `el-input--${inputSize.value}` : '',
           {
 
             'is-disabled': inputDisabled,
@@ -370,8 +376,147 @@ export default defineComponent({
         onMouseenter={onMouseEnter}
         onMouseleave={onMouseLeave}
       >
-        {/* (type!== 'textarea' &&) */}
-      </div>
+
+        {
+          type?.value !== 'textarea' && (
+            <div class="template">
+              {/* 前置元素 */}
+              {ctx.slots.prepend && (
+                <div class="el-input-group__prepend">
+                  <slot name="prepend"></slot>
+                </div>
+              )}
+              {
+                type?.value !== 'textarea'
+                && (< input
+                  ref="input"
+                  class="el-input__inner"
+                  {...ctx.attrs}
+                  type={showPassword ? (passwordVisible ? 'text' : 'password') : props.type}
+                  disabled={inputDisabled.value}
+                  readonly={props.readonly}
+                  autocomplete={props.autocomplete}
+                  // tabindex={tabindex?.value}
+                  aria-label={props.label}
+                  onCompositionstart={handleCompositionStart}
+                  onCompositionupdate={handleCompositionUpdate}
+                  onCompositionend={handleCompositionEnd}
+                  onInput={handleInput}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  onKeydown={handleKeydown}
+                />)
+              }
+              {/* <!-- 前置内容 --> */}
+              {
+                (ctx.slots.prefix || prefixIcon)
+                && (
+                  <span class="el-input__prefix">
+                    <slot name="prefix"></slot>
+                    {
+                      prefixIcon && (
+                        <i
+                          class={['el-input__icon', prefixIcon]}
+                        ></i>
+                      )
+                    }
+                  </span>
+                )
+              }
+
+              {/* <!-- 后置内容 --> */}
+              {
+                getSuffixVisible() && (
+                  <span class="el-input__suffix">
+                    <span class="el-input__suffix-inner">
+                      {
+                        (!showClear || !showPwdVisible || !isWordLimitVisible)
+                        && (<div class="template">
+                          <slot name="suffix"></slot>
+                          <i v-if="suffixIcon" class={['el-input__icon', suffixIcon]}></i>
+                        </div>)
+                      }
+                      {
+                        showClear && (
+                          <i
+
+                            class="el-input__icon el-icon-circle-close el-input__clear"
+                            // @mousedown.prevent
+                            onClick={clear}
+                          ></i>
+                        )
+                      }
+
+                      {
+                        showPwdVisible && (
+                          <i class="el-input__icon el-icon-view el-input__clear" onClick={handlePasswordVisible}></i>
+                        )
+                      }
+
+                      {
+                        isWordLimitVisible && (
+                          <span class="el-input__count">
+                            <span class="el-input__count-inner">
+                              {{ textLength }}/{{ upperLimit }}
+                            </span>
+                          </span>
+                        )
+                      }
+
+                    </span >
+                    {
+                      validateState && (<i class={['el-input__icon', 'el-input__validateIcon', validateIcon]}></i>
+                      )
+                    }
+                  </span >
+                )
+              }
+
+              {/* < !--后置元素 --> */}
+              {
+                ctx.slots.append && (
+                  < div class="el-input-group__append" >
+                    <slot name="append"></slot>
+                  </div >
+                )
+              }
+
+            </div >
+          )
+        }
+        {
+          type?.value === 'textarea'
+          && (
+            <textarea
+              ref="textarea"
+              class="el-textarea__inner"
+              {...ctx.attrs}
+              style={textareaStyle.value}
+              disabled={inputDisabled.value}
+              readonly={props.readonly}
+              autocomplete={props.autocomplete}
+              // tabindex={props.tabindex}
+              aria-label={props.label}
+              onCompositionstart={handleCompositionStart}
+              onCompositionupdate={handleCompositionUpdate}
+              onCompositionend={handleCompositionEnd}
+              onInput={handleInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            >
+            </textarea>
+          )
+
+        }
+        {
+          isWordLimitVisible && type.value === 'textarea'
+          && (<span class="el-input__count">{{ textLength }}/{{ upperLimit }}</span>
+          )
+        }
+
+      </div >
 
     )
   },
